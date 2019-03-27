@@ -4,14 +4,15 @@ export default class Matchmaking{
     }
 
     getPlayersList(){
-        return this.playersList
+        return this.playersList.filter(id => id.qID!='holder')
     }
 
-    addPlayerToList(p,i){
+    addPlayerToList(p,i,queueID){
         this.playersList.push(
             {
                 player:p,
-                id:i
+                id:i,
+                qID:queueID
             }
         )
     }
