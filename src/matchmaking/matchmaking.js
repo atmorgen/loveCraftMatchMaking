@@ -91,6 +91,16 @@ class Matchmaking extends Component {
         )
     }
 
+    addMatchToUser(uid,matchID){
+        console.log(uid,"Added to:",matchID)
+        return new Promise((resolve)=>{
+            this.db.collection(DB.USERS).doc(uid).update({
+                match:matchID
+            })
+            resolve()
+        })
+    }
+
     removeFromMatchmakingList(player){
         this.db.collection(DB.MATCHMAKING).doc(player.qID).delete().then(function(){
             console.log(player.player, "Has been placed into a match!")
@@ -114,10 +124,11 @@ class Matchmaking extends Component {
                     p2:nextInLine.player
                 }
             })
-            
-            await this.addToMatches(frontOfQueue,nextInLine,this.generateBoard())
+            var generatedBoard = this.generateBoard()
+            await this.addToMatches(frontOfQueue,nextInLine,generatedBoard)
+            await this.addMatchToUser(frontOfQueue.id,generatedBoard.boardID)
+            await this.addMatchToUser(nextInLine.id,generatedBoard.boardID)
             players = this.playerList.getPlayersList()
-
         }  
     }
 
