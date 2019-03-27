@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import * as DB from '../Firebase/DB';
 import MatchmakingClass from './MatchmakingClass';
+import BoardClass from '../BasicClasses/Board/BoardClass';
 
 /* This class searches throughout the Matchmaking collection for at least two non-matched
    players.  Once found it removes them from the Matchmaking collection and adds them to
@@ -50,11 +51,12 @@ class Matchmaking extends Component {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === "added") {
                         var addedPlayer = change.doc.data().player
+                        var addedPlayerID = change.doc.data().id
                         console.log("Player added to queue: ", addedPlayer)
                         this.setState({
                             newestPlayer: addedPlayer
                         })
-                        resolve(this.playerList.addPlayerToList(addedPlayer,change.doc.id))
+                        resolve(this.playerList.addPlayerToList(addedPlayer,addedPlayerID,change.doc.id))
                     }
                     if (change.type === "modified") {
                         console.log("Modified Data shouldn't be happening?");
@@ -72,11 +74,16 @@ class Matchmaking extends Component {
         )
     }
 
-    addToMatches(player1,player2){
+    addToMatches(player1,player2,generatedMap){
         return new Promise((resolve) => 
-            this.db.collection(DB.MATCHES).add({
+            this.db.collection(DB.MATCHES).doc(generatedMap.boardID).set({
                 p1:player1,
-                p2:player2
+                p2:player2,
+                board:{
+                    size:generatedMap.size,
+                    tiles:JSON.stringify(generatedMap.tiles),
+                    units:JSON.stringify(generatedMap.units)
+                }
             }).then(function(){
                 console.log('Match Made!',player1,player2)
                 resolve()
@@ -85,7 +92,7 @@ class Matchmaking extends Component {
     }
 
     removeFromMatchmakingList(player){
-        this.db.collection(DB.MATCHMAKING).doc(player.id).delete().then(function(){
+        this.db.collection(DB.MATCHMAKING).doc(player.qID).delete().then(function(){
             console.log(player.player, "Has been placed into a match!")
         })
     }
@@ -107,11 +114,19 @@ class Matchmaking extends Component {
                     p2:nextInLine.player
                 }
             })
-
-            await this.addToMatches(frontOfQueue,nextInLine)
+            
+            await this.addToMatches(frontOfQueue,nextInLine,this.generateBoard())
             players = this.playerList.getPlayersList()
-        }
-        
+
+        }  
+    }
+
+    generateBoard(){
+        return new BoardClass(this.getRandomID(),20)
+    }
+
+    getRandomID(){
+        return '_' + Math.random().toString(36).substr(2, 9);
     }
 
     render() { 

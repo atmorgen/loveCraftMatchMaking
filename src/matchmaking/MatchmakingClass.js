@@ -7,11 +7,12 @@ export default class Matchmaking{
         return this.playersList
     }
 
-    addPlayerToList(p,i){
+    addPlayerToList(p,i,queueID){
         this.playersList.push(
             {
                 player:p,
-                id:i
+                id:i,
+                qID:queueID
             }
         )
     }
