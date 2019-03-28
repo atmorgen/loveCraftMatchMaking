@@ -4,7 +4,7 @@ export default class Matchmaking{
     }
 
     getPlayersList(){
-        return this.playersList.filter(id => id.qID!='holder')
+        return this.playersList.filter(id => id.qID!=='holder')
     }
 
     addPlayerToList(p,i,queueID){
