@@ -6,11 +6,7 @@ import BoardClass from '../BasicClasses/Board/BoardClass';
 
 /* This class searches throughout the Matchmaking collection for at least two non-matched
    players.  Once found it removes them from the Matchmaking collection and adds them to
-   a newly created match within the Matches db. 
-   
-   TODO: Send the receipt to each of the players to inform them that the match has been
-   created.  Also, move the Board creation information to this matchmaking server so that
-   the player-side server does not have to do that.  */
+   a newly created match within the Matches db.  */
 
 class Matchmaking extends Component {
     constructor(){
@@ -32,7 +28,7 @@ class Matchmaking extends Component {
 
     //Sets the subscription to the matchmaking database
     componentDidMount() {
-        this.docSubscription()
+        this.matchmakingSubscription()
     }
 
     //reruns the matchmaking method anytime there is an addition to the matchmaking db
@@ -44,7 +40,7 @@ class Matchmaking extends Component {
     }
 
     //a subscription method used to add/remove players from the LFG queue
-    docSubscription(){
+    matchmakingSubscription(){
         return new Promise((resolve) => 
             this.db.collection(DB.MATCHMAKING)
             .onSnapshot((snapshot) => {
@@ -72,6 +68,12 @@ class Matchmaking extends Component {
                 });
             })
         )
+    }
+
+    matchesSubscription(){
+        return new Promise((resolve)=>{
+            //this.db.collection(DB.MATCHES).
+        })
     }
 
     addToMatches(player1,player2,generatedMap){
@@ -125,6 +127,7 @@ class Matchmaking extends Component {
                 }
             })
             var generatedBoard = this.generateBoard()
+            console.log(generatedBoard)
             await this.addToMatches(frontOfQueue,nextInLine,generatedBoard)
             await this.addMatchToUser(frontOfQueue.id,generatedBoard.boardID)
             await this.addMatchToUser(nextInLine.id,generatedBoard.boardID)
