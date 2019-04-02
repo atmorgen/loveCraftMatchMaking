@@ -70,12 +70,6 @@ class Matchmaking extends Component {
         )
     }
 
-    matchesSubscription(){
-        return new Promise((resolve)=>{
-            //this.db.collection(DB.MATCHES).
-        })
-    }
-
     addToMatches(player1,player2,generatedMap){
         return new Promise((resolve) => 
             this.db.collection(DB.MATCHES).doc(generatedMap.boardID).set({
