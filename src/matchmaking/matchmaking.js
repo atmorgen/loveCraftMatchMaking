@@ -79,6 +79,10 @@ class Matchmaking extends Component {
                     size:generatedMap.size,
                     tiles:JSON.stringify(generatedMap.tiles),
                     units:JSON.stringify(generatedMap.units)
+                },
+                turnSubmission:{
+                    p1:null,
+                    p2:null
                 }
             }).then(function(){
                 console.log('Match Made!',player1,player2)
