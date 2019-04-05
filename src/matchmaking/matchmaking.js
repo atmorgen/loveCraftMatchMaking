@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import * as DB from '../Firebase/DB';
 import MatchmakingClass from './MatchmakingClass';
 import BoardClass from '../BasicClasses/Board/BoardClass';
+import Matches from '../matches/matches';
 
 /* This class searches throughout the Matchmaking collection for at least two non-matched
    players.  Once found it removes them from the Matchmaking collection and adds them to
@@ -79,6 +80,10 @@ class Matchmaking extends Component {
                     size:generatedMap.size,
                     tiles:JSON.stringify(generatedMap.tiles),
                     units:JSON.stringify(generatedMap.units)
+                },
+                turnSubmission:{
+                    p1:null,
+                    p2:null
                 }
             }).then(function(){
                 console.log('Match Made!',player1,player2)
@@ -138,15 +143,18 @@ class Matchmaking extends Component {
     }
 
     render() { 
-        return (  
-            <ul>
-                <li>Newest Player: {this.state.newestPlayer}</li>
-                <li>Last Dropped Player: {this.state.removedPlayer}</li>
-                <ul>Newest Match:
-                    <li>Player One: {this.state.newMatchPlayers.p1}</li>
-                    <li>Player Two: {this.state.newMatchPlayers.p2}</li>
+        return (
+            <React.Fragment> 
+                <ul>
+                    <li>Newest Player: {this.state.newestPlayer}</li>
+                    <li>Last Dropped Player: {this.state.removedPlayer}</li>
+                    <ul>Newest Match:
+                        <li>Player One: {this.state.newMatchPlayers.p1}</li>
+                        <li>Player Two: {this.state.newMatchPlayers.p2}</li>
+                    </ul>
                 </ul>
-            </ul>
+                <Matches />
+            </React.Fragment>
         );
     }
 }
