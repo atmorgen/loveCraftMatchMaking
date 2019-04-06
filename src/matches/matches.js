@@ -4,7 +4,7 @@ import * as DB from '../Firebase/DB'
 
 //for creating a submission to the TurnResolution
 import Submission from './submission'
-import TurnResolution from './TurnResolution'
+import TurnResolution from './phases/TurnResolution'
 
 /* This Class is responsible for subscribing to match changes and for preparing the data to push the the TurnResolution.js file for turn resolution */
 
@@ -34,6 +34,7 @@ class Matches extends Component {
     }
 
     checkForSubmissionUpdate(matchData,id){
+        
         var turnSubmission = matchData.turnSubmission
         //if both players have submitted a turn
         if(turnSubmission.length === 2){
@@ -48,7 +49,9 @@ class Matches extends Component {
 
     render() { 
         return (  
-            <div>Matches Info</div>
+            <React.Fragment>
+                <div>Matches Info</div>
+            </React.Fragment>
         );
     }
 }

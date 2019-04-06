@@ -84,7 +84,8 @@ class Matchmaking extends Component {
                 turnSubmission:{
                     p1:null,
                     p2:null
-                }
+                },
+                host:null
             }).then(function(){
                 console.log('Match Made!',player1,player2)
                 resolve()
