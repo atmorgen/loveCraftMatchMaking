@@ -12,7 +12,8 @@ export default class Matchmaking{
             {
                 player:p,
                 id:i,
-                qID:queueID
+                qID:queueID,
+                ping:null
             }
         )
     }
