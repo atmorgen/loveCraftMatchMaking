@@ -85,7 +85,8 @@ class Matchmaking extends Component {
                     p2:null
                 },
                 host:null,
-                phase:null
+                phase:"Capital",
+                subphase:null
             }).then(function(){
                 console.log('Match Made!',player1,player2)
                 resolve()
