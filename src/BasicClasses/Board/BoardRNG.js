@@ -15,7 +15,7 @@ class BoardRNG {
         this.waterMass = Math.floor(this.landMass*this.waterRatio)
         this.chanceOfWater = 4
         //mountain
-        this.mountainRatio =.15
+        this.mountainRatio =.05
         this.mountainMass = Math.floor(this.landMass*this.mountainRatio)
         this.chanceOfMountain = 2
         //forest
