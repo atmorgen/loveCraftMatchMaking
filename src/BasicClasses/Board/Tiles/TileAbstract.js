@@ -6,6 +6,10 @@ export default class TileAbstract{
         }
     }
 
+    getClassType(){
+        return this.classType;
+    }
+
     getPosition(){
         return this.position;
     }
