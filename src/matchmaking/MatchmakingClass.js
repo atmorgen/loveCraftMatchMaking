@@ -13,7 +13,13 @@ export default class Matchmaking{
                 player:p,
                 id:i,
                 qID:queueID,
-                ping:null
+                ping:null,
+                resources:{
+                    Food:10,
+                    Gold:0,
+                    Wood:0,
+                    Metal:0
+                }
             }
         )
     }
